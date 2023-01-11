@@ -6,8 +6,18 @@ var fs = require('fs');
 var request = require('needle');
 
 // This function should retrieve the first line of the file at `filePath`
-var pluckFirstLineFromFile = function (filePath) {
+var pluckFirstLineFromFile = function (filePath, handlerFirstLine) {
   // TODO
+  fs.readFile(filePath, function(err, data) {
+    if (err) {
+      handlerFirstLine(err)
+    } else {
+      const text = data.toString();
+      const firstLine = text.split('\n')[0];
+      handlerFirstLine(null, firstLine);
+    }
+
+  })
 };
 
 // This function should retrieve the status code of a GET request to `url`
